@@ -19,8 +19,6 @@ def parse_arguments():
                         help='Output CSV file name (default: gaze_data.csv)')
     parser.add_argument('--hotkey', type=str, default='ctrl + alt + r',
                         help='Hotkey for starting/stopping recording (default: ctrl + alt + r)')
-    parser.add_argument('--duration', type=int, default=0,
-                        help='Recording duration in seconds (0 for manual stop, default: 0)')# これ後で変える．60分で強制停止にしたいので．
     return parser.parse_args()
 
 
@@ -77,10 +75,6 @@ print(f"args = {args}")
 
 output_file_name = args.output
 hotkey_start = args.hotkey
-recording_duration = args.duration
-
-
-
 
 print('activate...')
 keyboard.add_hotkey(hotkey_start,stream_start)
