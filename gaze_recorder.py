@@ -1,3 +1,4 @@
+import argparse
 import tobii_research as tr
 import keyboard
 import time
@@ -11,6 +12,17 @@ isDeviceActive=False
 hotkey_start = 'ctrl + alt + r'
 
 start_time = time.time()
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Tobii Gaze Recorder")
+    parser.add_argument('--output', type=str, default='gaze_data.csv',
+                        help='Output CSV file name (default: gaze_data.csv)')
+    parser.add_argument('--hotkey', type=str, default='ctrl + alt + r',
+                        help='Hotkey for starting/stopping recording (default: ctrl + alt + r)')
+    parser.add_argument('--duration', type=int, default=0,
+                        help='Recording duration in seconds (0 for manual stop, default: 0)')# これ後で変える．60分で強制停止にしたいので．
+    return parser.parse_args()
+
 
 def gaze_data_callback(gaze_data): 
     gaze_data_list.append(gaze_data)
@@ -58,6 +70,11 @@ def outputCSV():
                 'right_eye_x': right_eye_x,
                 'right_eye_y': right_eye_y
             })
+
+# メイン処理の冒頭で引数を解析
+args = parse_arguments()
+print(f"args = {args}")
+
 
 print('activate...')
 keyboard.add_hotkey(hotkey_start,stream_start)
