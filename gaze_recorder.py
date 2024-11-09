@@ -9,8 +9,7 @@ my_eyetracker = found_eyetrackers[0]
 gaze_data_list = []
 
 isDeviceActive=False
-# hotkey_start = 'ctrl + alt + r'
-# output_file_name = 'gaze_data.csv'
+
 start_time = time.time()
 
 def parse_arguments():
@@ -70,8 +69,6 @@ def outputCSV(output_file_name):
             })
 
 def main():
-    # global output_file_name
-
     # メイン処理の冒頭で引数を解析
     args = parse_arguments()
     print(f"args = {args}")
@@ -81,7 +78,7 @@ def main():
 
     print('activate...')
     keyboard.add_hotkey(hotkey_start,lambda: stream_start(output_file_name))
-    #keyboard.add_hotkey('o',stream_end_and_output)
+    
     keyboard.wait('ctrl + alt + e')
     print('end...')
 
