@@ -10,7 +10,7 @@ gaze_data_list = []
 
 isDeviceActive=False
 hotkey_start = 'ctrl + alt + r'
-
+output_file_name = 'gaze_data.csv'
 start_time = time.time()
 
 def parse_arguments():
@@ -49,7 +49,7 @@ def stream_end_and_output():
     isDeviceActive = False
 
 def outputCSV():
-    with open('GazeDatas/long-test-1108-1.csv', 'w', newline='') as csvfile:
+    with open(output_file_name, 'w', newline='') as csvfile:
         record_start_time=gaze_data_list[0]["system_time_stamp"]
         fieldnames = ['time_stamp','left_eye_x', 'left_eye_y', 'right_eye_x', 'right_eye_y']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -74,6 +74,12 @@ def outputCSV():
 # メイン処理の冒頭で引数を解析
 args = parse_arguments()
 print(f"args = {args}")
+
+output_file_name = args.output
+hotkey_start = args.hotkey
+recording_duration = args.duration
+
+
 
 
 print('activate...')
