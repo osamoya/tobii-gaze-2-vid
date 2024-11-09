@@ -9,8 +9,8 @@ my_eyetracker = found_eyetrackers[0]
 gaze_data_list = []
 
 isDeviceActive=False
-hotkey_start = 'ctrl + alt + r'
-output_file_name = 'gaze_data.csv'
+# hotkey_start = 'ctrl + alt + r'
+# output_file_name = 'gaze_data.csv'
 start_time = time.time()
 
 def parse_arguments():
@@ -25,11 +25,11 @@ def parse_arguments():
 def gaze_data_callback(gaze_data): 
     gaze_data_list.append(gaze_data)
 
-def stream_start():
+def stream_start(output_file_name):
     global isDeviceActive
     if isDeviceActive:
         #print('still active')
-        stream_end_and_output()
+        stream_end_and_output(output_file_name)
     else:
         print('stream start')
         my_eyetracker.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
@@ -40,13 +40,13 @@ def stream_end():
     print('stream end')
     my_eyetracker.unsubscribe_from(tr.EYETRACKER_GAZE_DATA, gaze_data_callback)
 
-def stream_end_and_output():
+def stream_end_and_output(output_file_name):
     global isDeviceActive
     stream_end()
-    outputCSV()
+    outputCSV(output_file_name)
     isDeviceActive = False
 
-def outputCSV():
+def outputCSV(output_file_name):
     with open(output_file_name, 'w', newline='') as csvfile:
         record_start_time=gaze_data_list[0]["system_time_stamp"]
         fieldnames = ['time_stamp','left_eye_x', 'left_eye_y', 'right_eye_x', 'right_eye_y']
@@ -70,7 +70,7 @@ def outputCSV():
             })
 
 def main():
-    global output_file_name
+    # global output_file_name
 
     # メイン処理の冒頭で引数を解析
     args = parse_arguments()
@@ -80,11 +80,10 @@ def main():
     hotkey_start = args.hotkey
 
     print('activate...')
-    keyboard.add_hotkey(hotkey_start,stream_start)
+    keyboard.add_hotkey(hotkey_start,lambda: stream_start(output_file_name))
     #keyboard.add_hotkey('o',stream_end_and_output)
     keyboard.wait('ctrl + alt + e')
     print('end...')
-
 
 if __name__ == "__main__":
     main()
