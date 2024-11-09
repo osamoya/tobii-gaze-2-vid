@@ -1,3 +1,22 @@
+"""
+gaze_recorder.py
+
+このスクリプトは、Tobii Pro Sparkを使用して視線データを記録し、
+CSVファイルに保存します。コマンドライン引数を使用して出力ファイル名と
+ホットキーをカスタマイズできます。
+
+使用方法:
+    python gaze_recorder.py [--output OUTPUT_FILE] [--hotkey HOTKEY]
+
+オプション:
+    --output OUTPUT_FILE   出力するCSVファイルの名前 (デフォルト: gaze_data.csv)
+    --hotkey HOTKEY        記録の開始/停止に使用するホットキー (デフォルト: ctrl + alt + r)
+
+注意:
+    - Ctrl + Alt + E キーでプログラムを終了します。
+    - 使用前にTobiiアイトラッカーが正しく接続されていることを確認してください。
+    - 長時間の習得には耐えられません．（実装上の問題）
+"""
 import argparse
 import tobii_research as tr
 import keyboard
