@@ -69,15 +69,22 @@ def outputCSV():
                 'right_eye_y': right_eye_y
             })
 
-# メイン処理の冒頭で引数を解析
-args = parse_arguments()
-print(f"args = {args}")
+def main():
+    global output_file_name
 
-output_file_name = args.output
-hotkey_start = args.hotkey
+    # メイン処理の冒頭で引数を解析
+    args = parse_arguments()
+    print(f"args = {args}")
 
-print('activate...')
-keyboard.add_hotkey(hotkey_start,stream_start)
-#keyboard.add_hotkey('o',stream_end_and_output)
-keyboard.wait('ctrl + alt + e')
-print('end...')
+    output_file_name = args.output
+    hotkey_start = args.hotkey
+
+    print('activate...')
+    keyboard.add_hotkey(hotkey_start,stream_start)
+    #keyboard.add_hotkey('o',stream_end_and_output)
+    keyboard.wait('ctrl + alt + e')
+    print('end...')
+
+
+if __name__ == "__main__":
+    main()
